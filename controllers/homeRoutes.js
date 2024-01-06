@@ -2,6 +2,7 @@ const router = require('express').Router();
 const { User, Task, NotTask } = require('../models');
 const withAuth = require('../utils/auth');
 const knapsackWithItems = require('../utils/knapsack');
+const { Op } = require('sequelize');
 
 // Prevent non logged in users from viewing the homepage
 router.get('/', withAuth, async (req, res) => {
@@ -119,7 +120,10 @@ router.get('/knockout/:time', withAuth, async (req, res) => {
       /*  Get all of the task data for this user. */
       const taskData = await Task.findAll({
         where: {
-          user_id: req.session.user_id
+          user_id: req.session.user_id,
+          complete_date: {
+            [Op.is]: null
+          }
         },
         order: [['priority', 'ASC'], ['points', 'DESC']]
       });
