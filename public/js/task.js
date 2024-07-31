@@ -49,14 +49,13 @@ const taskFormHandler = async (event) => {
   
   const minutes = document.querySelector('#minutes').value;
   const points = document.querySelector('#points').value;
-
   const priority = document.querySelector('#priority').value || undefined;
 
     
   // console.log(due_date);
 
   if (title && body && priority && minutes && points) {
-     try{
+     try {
     console.log(form.lastChild.classList.contains('error-message'));
     console.log(form.lastChild)
      
@@ -87,6 +86,12 @@ const taskFormHandler = async (event) => {
       });
       if (response.ok) {
         alert('Successfully tasked!');
+        let text;
+        if (confirm("Clear the task?") == true) {
+          document.querySelector(".task-form").reset();
+        } else {
+          
+        }
       } else {
         alert('Task failed to create.');
       }
