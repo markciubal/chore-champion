@@ -2,57 +2,141 @@
    * The task form itself
    * @type {HTMLFormElement}
    */
+
+
+
 const form = document
   .querySelector('.task-form')
-  
-const taskFormHandler = async (event) => {
-  // preventDefault keeps the form from clearing after submitting
-  event.preventDefault();
-
+document.getElementById('generate').addEventListener('click', async () => {
+  document.getElementById('generate').classList.add("spin");
+  document.getElementById('generate').classList.add("scale");
+  document.getElementById('generate').innerHTML = "Generating...";
   /** 
    * Either "add" or "update".  From a hidden HTMLInputElement which passes along whether the page is creating a new task or updating an existing one
    * @type {String}
   */
  const type = document.getElementById('type').value;
 
-  // Checks that required fields are filled in, and highlights the not valid fields.
-  // document.querySelector('.task-form').classList.add('was-validated'); 
+// Checks that required fields are filled in, and highlights the not valid fields.
+// document.querySelector('.task-form').classList.add('was-validated'); 
 
-  /** 
-   * Task title from input
+/** 
+ * Task title from input
+ * @type {String}
+*/
+const title = document.querySelector('#title-task').value.trim();
+const body = document.querySelector('#body-task').value.trim();
+var due_date;
+if (document.querySelector('#due_date')) {
+  due_date = document.querySelector('#due_date').value;
+} else {
+  due_date = undefined;
+}
+var complete_date;
+if (document.querySelector('#complete_date')) {
+  complete_date = document.querySelector('#complete_date').value;
+} else {
+  complete_date = undefined;
+}
+
+var complete_date;
+if (type === 'update') {
+  if (!document.querySelector('#complete_date').value) {
+    complete_date = undefined;
+  } else {
+    complete_date = document.querySelector('#complete_date').value;
+  }
+}
+
+const minutes = document.querySelector('#minutes').value;
+const points = document.querySelector('#points').value;
+const priority = document.querySelector('#priority').value || undefined;
+
+  
+ try {
+  const response = await fetch('/api/tasks/generate', {
+    method: 'POST',
+    body: JSON.stringify({ 
+      title,
+      body,  
+      priority,
+      due_date,
+      minutes, 
+      points
+    }),
+    headers: { 'Content-Type': 'application/json' },
+  });
+
+  console.log('Clicked generate.');
+
+  if (response.ok) {
+    const data = await response.json();
+    console.log('Generated Task:', data.task);
+
+    document.querySelector("#title-task").value = data.task.title;
+    document.querySelector("#body-task").value = data.task.body;
+    document.querySelector("#priority").value = data.task.priority;
+    document.querySelector("#due_date").value = data.task.due_date;
+    document.querySelector("#minutes").value = data.task.minutes;
+    document.querySelector("#points").value = data.task.points;
+
+  } else {
+    alert('Task failed to generate.');
+  }
+} catch (error) {
+  console.error('Error:', error);
+  alert('An error occurred while generating the task.');
+}
+document.getElementById('generate').innerHTML = `<span id="ai-icon">✨</span> Generate Task`;
+document.getElementById('generate').classList.remove("spin");
+ document.getElementById('generate').classList.remove("scale");
+});
+const taskFormHandler = async (event) => {
+  // preventDefault keeps the form from clearing after submitting
+  event.preventDefault();
+/** 
+   * Either "add" or "update".  From a hidden HTMLInputElement which passes along whether the page is creating a new task or updating an existing one
    * @type {String}
   */
-  const title = document.querySelector('#title-task').value.trim();
-  const body = document.querySelector('#body-task').value.trim();
-  var due_date;
-  if (document.querySelector('#due_date')) {
-    due_date = document.querySelector('#due_date').value;
-  } else {
-    due_date = undefined;
-  }
-  var complete_date;
-  if (document.querySelector('#complete_date')) {
-    complete_date = document.querySelector('#complete_date').value;
-  } else {
-    complete_date = undefined;
-  }
-  console.log("due date", due_date);
+  const type = document.getElementById('type').value;
 
-  var complete_date;
-  if (type === 'update') {
-    if (!document.querySelector('#complete_date').value) {
-      complete_date = undefined;
-    } else {
-      complete_date = document.querySelector('#complete_date').value;
-    }
+// Checks that required fields are filled in, and highlights the not valid fields.
+// document.querySelector('.task-form').classList.add('was-validated'); 
+
+/** 
+ * Task title from input
+ * @type {String}
+*/
+const title = document.querySelector('#title-task').value.trim();
+const body = document.querySelector('#body-task').value.trim();
+var due_date;
+if (document.querySelector('#due_date')) {
+  due_date = document.querySelector('#due_date').value;
+} else {
+  due_date = undefined;
 }
-  
-  const minutes = document.querySelector('#minutes').value;
-  const points = document.querySelector('#points').value;
-  const priority = document.querySelector('#priority').value || undefined;
+var complete_date;
+if (document.querySelector('#complete_date')) {
+  complete_date = document.querySelector('#complete_date').value;
+} else {
+  complete_date = undefined;
+}
 
-    
-  // console.log(due_date);
+var complete_date;
+if (type === 'update') {
+  if (!document.querySelector('#complete_date').value) {
+    complete_date = undefined;
+  } else {
+    complete_date = document.querySelector('#complete_date').value;
+  }
+}
+
+const minutes = document.querySelector('#minutes').value;
+const points = document.querySelector('#points').value;
+const priority = document.querySelector('#priority').value || undefined;
+
+  
+// console.log(due_date);
 
   if (title && body && priority && minutes && points) {
      try {
@@ -72,10 +156,10 @@ const taskFormHandler = async (event) => {
     // TODO: Add a comment describing the functionality of this expression
     console.log(type);
     if (type === 'add') {
-      const response = await fetch('/api/tasks', {
-        method: 'POST',
-        body: JSON.stringify({ 
-          title,
+        const response = await fetch('/api/tasks', {
+          method: 'POST',
+          body: JSON.stringify({ 
+            title,
           body, 
           priority,
           due_date,

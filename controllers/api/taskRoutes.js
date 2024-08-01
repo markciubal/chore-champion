@@ -1,4 +1,6 @@
 const router = require('express').Router();
+const { OpenAI } = require('openai');
+
 const { Task, User, CompletedTask } = require('../../models');
 
 const { Op } = require('sequelize');
@@ -228,6 +230,55 @@ router.post('/', async (req, res) => {
     res.status(400).json(err);
   }
 })
+
+
+router.post('/generate', async (req, res) => {
+  try {
+    const openai = new OpenAI({
+      apiKey: process.env.OPENAI_API_KEY// This is the default and can be omitted
+    });
+    const taskParameters = {
+      prompt: `Generate a random task parameters for shortTitle and body, with appropriate values for the rest of the parameters returning a defined JSON string using JavaScript JSON.parse(response) with following parameters, for example:
+      '{
+        "task": {
+          "title": shortTitle, // A short title for the task, be creative and choose tasks that are generally applicable to people in general, not specific to a single person or group of people,
+          "body": body, // A longer description of the task,
+          "priority": rand(1, 5), // A priority from 1 to 5,
+          "due_date": futureDate // A due date for the task,
+          "minutes": rand(1, 120), // The number of minutes the task will take,
+          "points": rand(1, 1000) // The number of points the task is worth
+        }
+      }'.
+      
+      Strip everything but the JSON object. Check to make sure the JSON you provided is valid and matches the format. It should start with [ and end with ], and only contain an object. If not, fix it and send just the JSON again."`
+    }
+    console.log("Task parameters: " + taskParameters);
+    const solution = await openai.chat.completions.create({
+      messages: [{ role: 'assistant', content: taskParameters.prompt }],
+      model: 'gpt-3.5-turbo',
+      temperature: 1,
+      max_tokens: 100
+    });
+    const solutionText = solution.choices[0].message.content.replace("```json", '').replace("```", '');
+    console.log(solutionText);
+    try {
+      const solutionArray = JSON.parse(solutionText);
+      return res.status(200).json(solutionArray);
+    
+    } catch (error) {
+      console.log(error);
+      console.log(solutionText);
+
+      console.log("Failed to parse JSON solution.");
+      console.log(error);
+      return error + "There was an error generating a solution. Please try again.";
+    };
+  } catch (error) {
+    console.log("Failed to get solution.");
+    console.log(error);
+    return error + "There was an error generating a solution. Please try again.";
+  }
+});
 
 router.delete('/:id', async (req, res) => {
   try {

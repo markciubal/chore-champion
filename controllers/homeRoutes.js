@@ -342,7 +342,6 @@ router.get('/knockout/:time', withAuth, async (req, res) => {
   }
 });
 
-
 router.get('/trainingLog', withAuth, async (req, res) => {
 
   const userData = await User.findByPk(req.session.user_id);
