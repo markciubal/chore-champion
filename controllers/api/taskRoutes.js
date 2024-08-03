@@ -241,9 +241,9 @@ router.post('/generate', async (req, res) => {
       prompt: `Generate a random task parameters for shortTitle and body, with appropriate values for the rest of the parameters returning a defined JSON string using JavaScript JSON.parse(response) with following parameters, for example:
       '{
         "task": {
-          "title": shortTitle, // A short title for the task, be creative and choose tasks that are generally applicable to people in general, not specific to a single person or group of people,
-          "body": body, // A longer description of the task,
-          "priority": rand(1, 5), // A priority from 1 to 5,
+          "title": ${req.body.title || "title"}, // A short title for the task, be creative and choose tasks that are generally applicable to people in general, not specific to a single person or group of people,
+          "body": ${req.body.body || "title"}, // A longer description of the task,
+          "priority": ${req.body.title || rand(1, 5)}, // A priority from 1 to 5,
           "due_date": futureDate // A due date for the task,
           "minutes": rand(1, 120), // The number of minutes the task will take,
           "points": rand(1, 1000) // The number of points the task is worth
@@ -255,7 +255,7 @@ router.post('/generate', async (req, res) => {
     console.log("Task parameters: " + taskParameters);
     const solution = await openai.chat.completions.create({
       messages: [{ role: 'assistant', content: taskParameters.prompt }],
-      model: 'gpt-3.5-turbo',
+      model: 'gpt-4-turbo',
       temperature: 1,
       max_tokens: 100
     });
@@ -324,8 +324,8 @@ router.put('/:id', async (req, res) => {
       taskToUpdate.set({
         title: req.body.title || taskToUpdate.title,
         body: req.body.body || taskToUpdate.body,
-        due_date: new Date(req.body.due_date) || taskToUpdate.due_date,
-        complete_date: new Date(req.body.complete_date) || taskToUpdate.complete_date,
+        due_date: req.body.due_date || taskToUpdate.due_date,
+        complete_date: req.body.complete_date || taskToUpdate.complete_date,
         priority: req.body.priority || taskToUpdate.priority,
         points: req.body.points || taskToUpdate.points,
         minutes: req.body.minutes || taskToUpdate.minutes,

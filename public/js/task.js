@@ -7,6 +7,7 @@
 
 const form = document
   .querySelector('.task-form')
+try {
 document.getElementById('generate').addEventListener('click', async () => {
   document.getElementById('generate').classList.add("spin");
   document.getElementById('generate').classList.add("scale");
@@ -87,10 +88,14 @@ const priority = document.querySelector('#priority').value || undefined;
   console.error('Error:', error);
   alert('An error occurred while generating the task.');
 }
-document.getElementById('generate').innerHTML = `<span id="ai-icon">✨</span> Generate Task`;
+document.getElementById('generate').innerHTML = `<span id="ai-icon">✨</span> Generate`;
 document.getElementById('generate').classList.remove("spin");
  document.getElementById('generate').classList.remove("scale");
 });
+} catch {
+
+}
+
 const taskFormHandler = async (event) => {
   // preventDefault keeps the form from clearing after submitting
   event.preventDefault();
@@ -115,6 +120,7 @@ if (document.querySelector('#due_date')) {
 } else {
   due_date = undefined;
 }
+console.log(due_date); 
 var complete_date;
 if (document.querySelector('#complete_date')) {
   complete_date = document.querySelector('#complete_date').value;
@@ -181,6 +187,15 @@ const priority = document.querySelector('#priority').value || undefined;
       }
     } else if (type === 'update') {
       const id = +document.getElementById('id').value;
+      let due_date = document.getElementById('due_date').value;
+      if (due_date == "") {
+        due_date = undefined;
+      }
+
+      let complete_date = document.getElementById('complete_date').value;
+      if (complete_date == "") {
+        complete_date = undefined;
+      }
       const response = await fetch('/api/tasks/' + id, {
         method: 'PUT',
         body: JSON.stringify({ 
