@@ -1,20 +1,14 @@
 <h2>Create Account</h2>
-<form class="login-form">
+<form autocomplete="on" class="create-form">
   <div class="form-group">
-    <label for="email-login">Name</label>
-    <input type="text" class="w-100 m-1 mx-0 form-control" id="name-create" aria-describedby="emailHelp"
-      placeholder="Enter name">
-    <small id="emailHelp" class="form-text text-muted">What do you go by?</small>
+  <div class="form-group">
+    <label for="username-create">Username</label>
+    <input type="username" class="w-100 m-1 mx-0 form-control" name="username" id="username" aria-describedby="usernameHelp"
+      placeholder="Enter username">
   </div>
   <div class="form-group">
-    <label for="email-login">Email address</label>
-    <input type="email" class="w-100 m-1 mx-0 form-control" id="email-create" aria-describedby="emailHelp"
-      placeholder="Enter email address">
-    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-  </div>
-  <div class="form-group">
-    <label for="password-login">Password</label>
-    <input type="password" class="w-100 m-1 mx-0 form-control" id="password-create" placeholder="Password">
+    <label for="password-create">Password</label>
+    <input type="password" class="w-100 m-1 mx-0 form-control" name="password" id="password">
   </div>
   <div class="form-group">
     <button class="w-100 mx-0 m-1 btn btn-success" type="submit">Create Account</button>

@@ -3,6 +3,9 @@
    * @type {HTMLFormElement}
    */
 
+document.querySelector('#clear').addEventListener('click', () => {
+  document.querySelector(".task-form").reset();
+});
 
 
 const form = document
@@ -74,12 +77,12 @@ const priority = document.querySelector('#priority').value || undefined;
     const data = await response.json();
     console.log('Generated Task:', data.task);
 
-    document.querySelector("#title-task").value = data.task.title;
-    document.querySelector("#body-task").value = data.task.body;
-    document.querySelector("#priority").value = data.task.priority;
-    document.querySelector("#due_date").value = data.task.due_date;
-    document.querySelector("#minutes").value = data.task.minutes;
-    document.querySelector("#points").value = data.task.points;
+    document.querySelector("#title-task").value = data[0].task.title;
+    document.querySelector("#body-task").value = data[0].task.body;
+    document.querySelector("#priority").value = data[0].task.priority;
+    document.querySelector("#due_date").value = data[0].task.due_date;
+    document.querySelector("#minutes").value = data[0].task.minutes;
+    document.querySelector("#points").value = data[0].task.points;
 
   } else {
     alert('Task failed to generate.');

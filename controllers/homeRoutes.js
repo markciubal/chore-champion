@@ -78,11 +78,14 @@ router.get('/task/:id', withAuth, async (req, res) => {
   const taskId = req.params.id;
   const userData = await User.findByPk(req.session.user_id);
   const taskData = await Task.findByPk(taskId);
-  if (userData.user_id === taskData.user_id) {
+  console.log(userData);
+  console.log("The user ID is: " + userData.id);
+  console.log(taskData);
+  if (userData.id === taskData.user_id) {
     if (taskId) {
       const taskData = await Task.findByPk(taskId);
       console.log(taskData.due_date);
-      if (taskData.user_id === req.session.user_id) {
+      if (taskData.user_id === userData.id) {
         res.render('task', {
           logged_in: req.session.logged_in,
           userData,

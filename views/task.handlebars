@@ -14,7 +14,7 @@
         <label for="title-task">Title</label>
         <input type="text" class="w-100 m-1 mx-0 form-control d-flex align-items-center"
           data-bs-toggle="tooltip" data-bs-placement="right" data-bs-custom-class="custom-tooltip" 
-          data-bs-title="Please provide a unique title for your task that will help you differentiate it from any other task(s) that you create." id="title-task" aria-describedby="emailHelp"
+          data-bs-title="Please provide a unique title for your task that will help you differentiate it from any other task(s) that you create." id="title-task" aria-describedby="titleHelp"
           placeholder="Enter task title" {{#if taskData.dataValues.title}}value="{{taskData.dataValues.title}}"{{/if}}/>
       </div>
 
@@ -63,6 +63,7 @@
           {{#if updateData}}
         <button class="w-100 mx-0 m-1 btn btn-warning" type="submit">Save Edits</button>
           {{else}}
+          <button class="w-100 mx-0 m-1 btn btn-danger" type="clear" id="clear">Clear</button>
         <button class="w-100 mx-0 m-1 btn btn-success" type="submit">Create Task</button>
           {{/if}}
       </div>

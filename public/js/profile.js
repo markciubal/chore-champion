@@ -4,15 +4,15 @@ const updateFormHandler = async (event) => {
   
     // TODO: Add a comment describing the functionality of these expressions
     const name = document.querySelector('#name').value.trim();
-    const email = document.querySelector('#email').value.trim();
+    const username = document.querySelector('#username').value.trim();
     const icon = document.querySelector('#icon').value.trim();
     // const password = document.querySelector('#password-create').value;
   
-    if (name && email && icon) {
+    if (name && icon) {
       // TODO: Add a comment describing the functionality of this expression
       const response = await fetch('/api/users/profile', {
         method: 'PUT',
-        body: JSON.stringify({ name, email, icon }),
+        body: JSON.stringify({ name, username, icon }),
         headers: { 'Content-Type': 'application/json' },
       });
   
