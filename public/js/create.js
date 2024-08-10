@@ -27,10 +27,7 @@ $('.create-form').on('submit', async function(event) {
     // TODO: Add a comment describing the functionality of these expressions
     const username = $('#username').val().trim();
     const password = $('#password').val();
-
-    alert(username);
-    alert(password);
-
+    
     if (username && password) {
       // TODO: Add a comment describing the functionality of this expression
       const response = await fetch('/api/users/create', {
