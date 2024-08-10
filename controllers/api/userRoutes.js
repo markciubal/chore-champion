@@ -59,8 +59,7 @@ router.post('/create', async (req, res) => {
 router.put('/profile', async (req, res) => {
   try {
     const result = await User.update(
-      { name: req.body.name, 
-        username: req.body.username,  
+      { username: req.body.username,  
         icon: req.body.icon  
       },
       { where: { id: req.session.user_id } }

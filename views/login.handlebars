@@ -1,7 +1,35 @@
-<h2>Login</h2>
+<div class="container mt-5">
+  <div class="text-center">
+      <h1 class="display-4">Knock Out Your Chores with ChoreChampion!</h1>
+  </div>
+  <div class="row justify-content-center mt-5">
+      <div class="col-md-8">
+          <div class="card mb-4">
+              <div class="card-body">
 
-<h4>CHORECHAMPION is a to-do list app designed to help you manage your tasks efficiently using advanced algorithms.</h4><h4>Knockout your chores more efficiently.</h4>
-
+                  <div class="accordion" id="accordionExample">
+                      <div class="accordion-item">
+                          <h2 class="accordion-header text-center" id="headingOne">
+                              <button class="accordion-button text-center" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                  Learn More
+                              </button>
+                          </h2>
+                          <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                              <div class="accordion-body">
+                                  <strong>Fight Your Way to Victory:</strong> ChoreChampion employs advanced algorithms to prioritize tasks, empowering you to take on your to-do list like a pro and emerge victorious over the chaos.
+                                  <br><br>
+                                  <strong>Unleash Your Potential:</strong> Craft a chore schedule that aligns with your unique style, enabling you to punch through daily hurdles and achieve your goals with precision.
+                                  <br/><br/>
+                                  <strong>Pack a Punch:</strong> ChoreChampion leverages the power of the knapsack problem, an optimization strategy that selects tasks with the highest value to fit within your available time, ensuring maximum productivity and satisfaction.
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
 <form class="login-form">
   <div class="form-group">
     <label for="username-login">Username</label>
@@ -15,8 +43,8 @@
   <div class="form-group">
     <button class="w-100 mx-0 m-1 btn btn-success" type="submit">Submit</button>
   </div>
-  <center><a class="w-100 mx-0 m-1 btn btn-primary"  data-bs-toggle="tooltip" data-bs-placement="bottom"
+  <center><a class="w-100 mx-0 m-1 btn btn-danger"  data-bs-toggle="tooltip" data-bs-placement="bottom"
                     data-bs-custom-class="custom-tooltip"
-                    data-bs-title="Join up!" href="/create">No account? Create one!</a></center>
+                    data-bs-title="Join up!" href="/create">No account?</a></center>
 </form>
 <script src="/js/login.js"></script>

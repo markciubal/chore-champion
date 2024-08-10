@@ -9,13 +9,12 @@ router.get('/', withAuth, async (req, res) => {
 
     const userData = await User.findByPk(req.session.user_id);
 
-    res.render('homepage', {
+    res.render('/task', {
       userData,
       // Pass the logged in flag to the template
       logged_in: req.session.logged_in,
     });
   } catch (err) {
-    res.status(500).json(err);
   }
 });
 
@@ -32,7 +31,7 @@ router.get('/login', (req, res) => {
 router.get('/create', (req, res) => {
   // If a session exists, redirect the request to the homepage
   if (req.session.logged_in) {
-    res.redirect('/');
+    res.redirect('/task');
     return;
   }
   res.render('create');
