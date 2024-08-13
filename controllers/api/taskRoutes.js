@@ -1,6 +1,5 @@
 const router = require('express').Router();
 const { OpenAI } = require('openai');
-
 const { Task, User, CompletedTask } = require('../../models');
 
 const { Op } = require('sequelize');
@@ -232,143 +231,16 @@ router.post('/', async (req, res) => {
 })
 
 
-router.post('/generate', async (req, res) => {
+router.post('/random', async (req, res) => {
   try {
-    const openai = new OpenAI({
-      apiKey: process.env.OPENAI_API_KEY// This is the default and can be omitted
-    });
-    const taskParameters = {
-      prompt: `Generate a random task parameters for shortTitle and body, things like volunteer opportunities, cleaning, exercise, things that contribute to global and personal health. with appropriate values for the rest of the parameters. Return a defined JSON string using JavaScript JSON.parse(response) with following parameters.  Strip everything but the JSON object. Check to make sure the JSON you provided is valid and exactly matches the format. It should start with [ and end with ], and only contain an object. If not, fix it and send just the JSON again. Here is an example:
-      for example: Exercise for 30 minutes
-Meditate for 10 minutes
-Read a book for 30 minutes
-Write in a journal
-Plan meals for the week
-Prepare a healthy breakfast
-Drink 8 glasses of water
-Practice deep breathing exercises
-Do a digital detox for an hour
-Go for a walk outside
-Try a new recipe
-Organize a workspace
-Declutter one room
-Set daily goals
-Practice gratitude
-Call a family member
-Catch up with a friend
-Learn a new skill online
-Listen to a podcast
-Take a relaxing bath
-Stretch for 10 minutes
-Plan a fun weekend activity
-Volunteer for a local charity
-Create a budget plan
-Review financial goals
-Attend a fitness class
-Explore a new hobby
-Listen to calming music
-Do a puzzle or brain game
-Write a letter to a friend
-Clean out the inbox
-Update a resume
-Research a new topic of interest
-Try a new workout
-Start a creative project
-Organize a photo album
-Take a nature hike
-Plant a small garden
-Practice yoga
-Learn a few phrases in a new language
-Cook a meal with family or friends
-Have a tech-free evening
-Create a vision board
-Review the personal goals
-Try a mindfulness app
-Practice positive affirmations
-Plan a future trip
-Explore local attractions
-Attend a community event
-Write down achievements
-Create a self-care routine
-Host a game night
-Do a random act of kindness
-Reflect on personal values
-Try a new meditation technique
-Create a list of books to read
-Set a bedtime routine
-Try meal prepping
-Create a family photo wall
-Watch a documentary
-Paint or draw
-Visit a local museum
-Plan a picnic
-Visit a farmer's market
-Take a dance class
-Practice public speaking
-Create a personal development plan
-Organize the wardrobe
-Have a spa day at home
-Visit a library
-Start a gratitude jar
-Write a personal mission statement
-Attend a workshop or seminar
-Create a morning routine
-Practice mindful eating
-Start a DIY project
-Visit a new park
-Host a dinner party
-Join a club or group
-Write a poem or short story
-Attend a yoga class
-Have a movie night with friends
-Do a social media audit
-Make a playlist of favorite songs
-Visit a new coffee shop
-Make a list of things to be thankful for
-Create a sleep schedule
-Explore a nearby town or city
-Create a home workout plan
-Join an online community
-Practice visualization exercises
-Explore different cuisines
-Write a personal reflection
-Create a calming bedtime ritual
-Make a scrapbook
-Spend time in a garden
-Attend a live performance
-Spend time with pets
-Do a creative writing exercise
-Make a bucket list
-'[{
-        "task": {
-          "title": title, // A short title for the task, be creative and choose tasks that are generally applicable to people in general, not specific to a single person or group of people,
-          "body": body, // A longer description of the task,
-          "priority": appropriate_priority_1_to_5, // A priority from 1 to 5S,
-          "due_date": now() + appropriate_time_to_take, // A due date for the task in format: ,
-          "minutes": appropriate_time_to_take, // The number of minutes the task will take,
-          "points": appropriate_points // The number of points the task is worth, 1 point would be for brushing teeth, 1000 points for doing something very difficult.
-        }
-    }]'`
-    }
-    console.log("Task parameters: " + taskParameters);
-    const solution = await openai.chat.completions.create({
-      messages: [{ role: 'assistant', content: taskParameters.prompt }],
-      model: 'gpt-4-turbo',
-      temperature: 1,
-      max_tokens: 200
-    });
-    const solutionText = solution.choices[0].message.content.replace("```json", '').replace("```", '');
-    console.log(solutionText);
+    const randomTask = taskJSON[Math.floor(Math.random() * taskJSON.length)];
+ 
     try {
-      const solutionArray = JSON.parse(solutionText);
-      return res.status(200).json(solutionArray);
+      return res.status(200).json(randomTask);
     
     } catch (error) {
       console.log(error);
-      console.log(solutionText);
-
-      console.log("Failed to parse JSON solution.");
-      console.log(error);
+      console.log(randomTask);
       return error + "There was an error generating a solution. Please try again.";
     };
   } catch (error) {

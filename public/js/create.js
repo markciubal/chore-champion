@@ -37,8 +37,18 @@ $('.create-form').on('submit', async function(event) {
       });
   
       if (response.ok) {
-        alert("Account created!");
-        document.location.replace('/login');
+        alert("Account created! Make sure you save your password!");
+        const response = await fetch('/api/users/login', {
+          method: 'POST',
+          body: JSON.stringify({ username, password }),
+          headers: { 'Content-Type': 'application/json' },
+        });
+    
+        if (response.ok) {
+          document.location.replace('/');
+        } else {
+          alert('Failed to log in');
+        }
       } else {
         console.log(response);
         alert('Failed to log in');
