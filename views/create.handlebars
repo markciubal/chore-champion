@@ -1,7 +1,27 @@
 <div class="container mt-5">
   <div class="text-center">
-      <h1 class="display-4">Knock Out Your Chores with ChoreChampion!</h1>
+      <h1 class="display-4">Create a ChoreChampion Account!</h1>
   </div>
+</div>
+<div class="text-center">We don't ask for your information.<br/>Here's a random username and password for you, just make sure to save it in your password manager.</div>
+<form autocomplete="on" class="create-form">
+  <div class="form-group">
+  <div class="form-group">
+    <label for="username-create">Username</label>
+    <input type="username" class="w-100 m-1 mx-0 form-control" name="username" id="username" aria-describedby="usernameHelp"
+      placeholder="Enter username">
+  </div>
+  <div class="form-group">
+    <label for="password-create">Password</label>
+    <input type="password" class="w-100 m-1 mx-0 form-control" name="password" id="password">
+  </div>
+  <div class="form-group">
+    <button class="w-100 mx-0 m-1 btn btn-success" type="submit">Create - Become a Chore Champion!</button>
+    <center><a class="w-100 mx-0 m-1 btn btn-primary"  data-bs-toggle="tooltip" data-bs-placement="bottom"
+                    data-bs-custom-class="custom-tooltip"
+                    data-bs-title="Join up!" href="/login">Log In - Already a Chore Champion?</a></center>
+  </div>
+</form>
   <div class="row justify-content-center mt-5">
       <div class="col-md-8">
           <div class="card mb-4">
@@ -29,21 +49,4 @@
           </div>
       </div>
   </div>
-</div>
-<div class="text-center">We don't ask for your information.<br/>Here's a random username and password for you, just make sure to save it in your password manager.</div>
-<form autocomplete="on" class="create-form">
-  <div class="form-group">
-  <div class="form-group">
-    <label for="username-create">Username</label>
-    <input type="username" class="w-100 m-1 mx-0 form-control" name="username" id="username" aria-describedby="usernameHelp"
-      placeholder="Enter username">
-  </div>
-  <div class="form-group">
-    <label for="password-create">Password</label>
-    <input type="password" class="w-100 m-1 mx-0 form-control" name="password" id="password">
-  </div>
-  <div class="form-group">
-    <button class="w-100 mx-0 m-1 btn btn-success" type="submit">Become a Chore Champion!</button>
-  </div>
-</form>
 <script src="/js/create.js"></script>

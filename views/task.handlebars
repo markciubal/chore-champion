@@ -4,7 +4,7 @@
   <input id="id" value="{{taskData.dataValues.id}}" hidden />
   <input id="type" value="update" hidden />
   {{else}}
-  <h1 class="text-center">Create a New Task</h1>
+  <h1 class="text-center">Add a New Task</h1>
   <input id="type" value="add" hidden />
   {{/if}}
   <div class="col-12-6">
@@ -62,7 +62,7 @@
         {{#if updateData}}
           <button class="m-1 btn btn-warning flex-fill" type="submit">Save Edits</button>
         {{else}}
-          <button id="random" class="m-1 btn btn-success" type="button">✨ Random</button>
+          <button id="random" class="m-1 btn btn-primary" type="button">✨ Random</button>
           <button class="m-1 btn btn-success flex-fill" type="submit">Create</button>
         {{/if}}
         <button class="m-1 btn btn-danger flex-fill" type="button" id="clear">Clear</button>
