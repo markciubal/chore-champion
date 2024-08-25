@@ -31,32 +31,36 @@ document.querySelector('#clear').addEventListener('click', () => {
   document.querySelector(".task-form").reset();
 });
 
-
+try {
+  document.getElementById('random').addEventListener('click', async () => {
+    let randomTask = await getRandomTask();
+    
+    // Populate form fields or use data in the application
+    document.querySelector("#title-task").value = randomTask.title;
+    document.querySelector("#body-task").value = randomTask.body;
+    document.querySelector("#priority").value = randomTask.priority;
+    // new Date for now + minutes
+    let date = new Date();
+    date.setMinutes(date.getMinutes() + randomTask.minutes);
+    
+    
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-indexed
+    const day = String(date.getDate()).padStart(2, '0');
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    console.log(date)
+    let futureDate = `${year}-${month}-${day}T${hours}:${minutes}`;
+    
+    document.querySelector("#due_date").value = futureDate;
+    document.querySelector("#minutes").value = randomTask.minutes;
+    document.querySelector("#points").value = randomTask.points;
+    });
+  } catch {
+    console.log('No random button found');
+  }
 const form = document.querySelector('.task-form');
-document.getElementById('random').addEventListener('click', async () => {
-let randomTask = await getRandomTask();
 
-// Populate form fields or use data in the application
-document.querySelector("#title-task").value = randomTask.title;
-document.querySelector("#body-task").value = randomTask.body;
-document.querySelector("#priority").value = randomTask.priority;
-// new Date for now + minutes
-let date = new Date();
-date.setMinutes(date.getMinutes() + randomTask.minutes);
-
-
-const year = date.getFullYear();
-const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-indexed
-const day = String(date.getDate()).padStart(2, '0');
-const hours = String(date.getHours()).padStart(2, '0');
-const minutes = String(date.getMinutes()).padStart(2, '0');
-console.log(date)
-let futureDate = `${year}-${month}-${day}T${hours}:${minutes}`;
-
-document.querySelector("#due_date").value = futureDate;
-document.querySelector("#minutes").value = randomTask.minutes;
-document.querySelector("#points").value = randomTask.points;
-});
 const taskFormHandler = async (event) => {
   // preventDefault keeps the form from clearing after submitting
   event.preventDefault();
